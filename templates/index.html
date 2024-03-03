@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="search"><br>
+    <div id="box">
+        {% for item in object_list %}
+            {{item}}<br>
+        {% endfor %}
+    </div>
+
+
+    <script>
+        const data='{{qs_json}}'
+        console.log(data)
+        const readData=JSON.parse(data.replace(/&quot;/g,'"'))
+        console.log(readData)
+
+        const input=document.getElementById("search")
+        let filterArr=[]
+
+        input.addEventListener('keyup',(e)=>{
+            box.innerHTML=""
+            filterArr=readData.filter(info=>info["name"].toLowerCase().includes(e.target.value.toLowerCase()))
+            if(filterArr.length>0){
+                filterArr.map(item=>{
+                    box.innerHTML+=`${item["name"]}<br>`
+                })
+            }
+            else{
+                box.innerHTML="NOT FOUND DATA"
+            }
+        })
+    </script>
+</body>
+</html>
